@@ -1,5 +1,9 @@
 version: '3.7'
- 
+volumes:
+  mlflow:
+    name: mlflow 
+  minio:
+    name: minio
 services:
  
   mlflow:
@@ -11,28 +15,27 @@ services:
       - mlflow:/mlruns:rw
     environment:
       - AWS_ACCESS_KEY_ID=${MINIO_ACCESS_KEY:-depth}
-      - AWS_SECRET_ACCESS_KEY=${MINIO_SECRET_KEY:-depth}
+      - AWS_SECRET_ACCESS_KEY=${MINIO_SECRET_KEY:-depth123}
       - MLFLOW_S3_ENDPOINT_URL=http://localhost:9000
     container_name: mlflow
     ports:
-      - "5000:5001"
+      - "5001:5001"
   minio:
     labels:
       com.example.service: "minio"
       com.example.description: "Minio storage"
-    image: minio:latest
+    image: minio/minio:latest
     container_name: minio
     volumes:
       - minio:/data/minio:rw
     environment:
       - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-depth}
-      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-depth}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-depth123}
     ports:
       - "9000:9000"
     deploy:
       restart_policy:
         delay: 10s
-        max_attempts: 10
         window: 60s
       placement:
         constraints:
