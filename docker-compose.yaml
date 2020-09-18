@@ -8,7 +8,7 @@ services:
       com.example.description: "Experiments visualisation"
     image: mlflow:latest
     volumes:
-      - mlflow:/mlruns
+      - mlflow:/mlruns:rw
     environment:
       - AWS_ACCESS_KEY_ID=${MINIO_ACCESS_KEY:-depth}
       - AWS_SECRET_ACCESS_KEY=${MINIO_SECRET_KEY:-depth}
@@ -23,7 +23,7 @@ services:
     image: minio:latest
     container_name: minio
     volumes:
-      - minio:/data/minio
+      - minio:/data/minio:rw
     environment:
       - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-depth}
       - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-depth}
