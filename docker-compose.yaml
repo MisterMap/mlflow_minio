@@ -18,8 +18,7 @@ services:
       - AWS_SECRET_ACCESS_KEY=${MINIO_SECRET_KEY:-depth123}
       - MLFLOW_S3_ENDPOINT_URL=http://localhost:9000
     container_name: mlflow
-    ports:
-      - "5001:5001"
+    network_mode: "host"
   minio:
     labels:
       com.example.service: "minio"
